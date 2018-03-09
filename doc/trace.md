@@ -1,0 +1,3 @@
+trace
+-------
+Execute the emulator.
