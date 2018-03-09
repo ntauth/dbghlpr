@@ -31,3 +31,9 @@ emulator exts commands
 * [query](https://github.com/0a777h/dbghlpr/blob/master/doc/query.md)
 * [trace](https://github.com/0a777h/dbghlpr/blob/master/doc/trace.md)
 * [context](https://github.com/0a777h/dbghlpr/blob/master/doc/context.md)
+---
+credits
+-------
+* disassembly powered by [capstone engine](https://github.com/aquynh/capstone)
+* emulator powered by [unicorn engine](https://github.com/unicorn-engine/unicorn)
+* string reference powered by [x64dbg](https://github.com/x64dbg/x64dbg)
