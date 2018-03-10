@@ -5,3 +5,4 @@ Allocate the memory used by the emulator.
 * -size : size
 * -copy : current memory copy
 ---
+![](./img/alloc.gif)
