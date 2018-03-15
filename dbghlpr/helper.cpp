@@ -527,57 +527,6 @@ int helper::restore(void *process_handle, unsigned long tid, unsigned long long 
 //
 //
 //
-bool __stdcall compare(unsigned char *src, unsigned char *code, unsigned long long code_size)
-{
-	unsigned long long i;
-
-	--code_size;
-
-	for (i = 0; i<code_size; ++i)
-	{
-		if (*code == '?')
-		{
-			++code;
-			++src;
-
-			continue;
-		}
-
-		if (*code != *src)
-			return false;
-
-		++code;
-		++src;
-	}
-
-	return true;
-}
-
-unsigned char * __stdcall helper::find(void *base, unsigned long long base_size, unsigned char *code, unsigned long long code_size)
-{
-	unsigned long long i;
-	PBYTE p;
-	unsigned long long bytes;
-
-	if (code_size > base_size)
-		return nullptr;
-
-	bytes = base_size - code_size;
-	p = (unsigned char *)base;
-
-	for (i = 0; i<bytes; ++i)
-	{
-		if (compare(p, code, code_size))
-		{
-			return (unsigned char *)p;
-		}
-
-		++p;
-	}
-
-	return nullptr;
-}
-
 bool helper::is_ascii(unsigned char *data, size_t max_len)
 {
 	size_t len = 0;

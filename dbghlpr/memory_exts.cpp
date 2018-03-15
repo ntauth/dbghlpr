@@ -56,6 +56,7 @@ void print_pattern_memory(unsigned long long base_virtual_address, unsigned char
 
 EXT_CLASS_COMMAND(WindbgEngine, pattern, "", "{b;ed,o;p;;}" "{l;ed,o;l;;}" "{pattern;x,o;pattern;;}") // bc = break code
 {
+#if 0
 	if (!g_Ext->HasArg("b"))
 		return;
 	if (!g_Ext->HasArg("l"))
@@ -147,6 +148,7 @@ EXT_CLASS_COMMAND(WindbgEngine, pattern, "", "{b;ed,o;p;;}" "{l;ed,o;l;;}" "{pat
 } while ((unsigned long)base < (unsigned long)end);
 #endif
 dprintf("\n");
+#endif
 }
 
 //
