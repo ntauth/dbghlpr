@@ -1,0 +1,41 @@
+LIBRARY DBGHLPR
+
+EXPORTS
+	; ExtCpp framework.
+	DebugExtensionInitialize
+	DebugExtensionUninitialize
+	DebugExtensionNotify
+
+	;
+	; analyzer
+	;
+	calc	; If the specified segment is the execution region, calculate the exact start address and the last address.
+	fe		; Get the entry address of the specified address.
+	fae		; Gets all the entry points of functions existing inside the specified segment.
+	caller	; Get the calling point of the function containing that address.
+	refstr	; Get all strings referenced by the code of the segment containing the address.
+	refexe	; Get all external code referenced by the code of the segment containing the address.
+	
+	;
+	; memory
+	;
+	pattern	; Search the memory of the same form as the pattern you entered.
+	chkmem	; Check the allocated virtual memory.
+
+	;
+	; -pv debugging helper
+	;
+	bc		; To refer to the address specified by debugee, suspend debuggee.
+	suspend	; suspend debuggee.
+	resume	; resume debuggee
+
+	;
+	; emulator
+	;
+	open	; Open the emulator.
+	alloc	; Allocate the memory used by the emulator.
+	write	; Input to the emulator memory.
+	read	; Output the emulator memory.
+	query	; Calculate the address in the emulator memory.
+	trace	; Execute the emulator.
+	context	; Adjust the context of the emulator cpu.

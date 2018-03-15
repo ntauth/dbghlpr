@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="analyzer.cpp">
+      <Filter>analyzer</Filter>
+    </ClCompile>
+    <ClCompile Include="engine.cpp">
+      <Filter>interface</Filter>
+    </ClCompile>
+    <ClCompile Include="engine_linker.cpp">
+      <Filter>interface</Filter>
+    </ClCompile>
+    <ClCompile Include="emulator.cpp">
+      <Filter>emulator</Filter>
+    </ClCompile>
+    <ClCompile Include="helper.cpp">
+      <Filter>helper</Filter>
+    </ClCompile>
+    <ClCompile Include="debugging_exts.cpp">
+      <Filter>exts</Filter>
+    </ClCompile>
+    <ClCompile Include="emulator_exts.cpp">
+      <Filter>exts</Filter>
+    </ClCompile>
+    <ClCompile Include="memory_exts.cpp">
+      <Filter>exts</Filter>
+    </ClCompile>
+    <ClCompile Include="engextcpp.cpp">
+      <Filter>interface</Filter>
+    </ClCompile>
+    <ClCompile Include="analyzer_exts.cpp">
+      <Filter>exts</Filter>
+    </ClCompile>
+    <ClCompile Include="analyzer_wrapper.cpp">
+      <Filter>analyzer</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="analyzer.h">
+      <Filter>analyzer</Filter>
+    </ClInclude>
+    <ClInclude Include="engine.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="engine_linker.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="interface.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="emulator.h">
+      <Filter>emulator</Filter>
+    </ClInclude>
+    <ClInclude Include="helper.h">
+      <Filter>helper</Filter>
+    </ClInclude>
+    <ClInclude Include="engextcpp.hpp">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="register_idx.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="analyzer_wrapper.h">
+      <Filter>analyzer</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="note.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="analyzer">
+      <UniqueIdentifier>{c85d59c9-fe80-4e44-b52d-d17e4c967ce0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="interface">
+      <UniqueIdentifier>{054d7f20-ddad-45e0-9fbe-5cb4ca1777d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="emulator">
+      <UniqueIdentifier>{9cc97b90-940f-415b-9b54-a6930c6e98d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="helper">
+      <UniqueIdentifier>{c7ad35d9-05c3-440d-802f-c7dfacba273d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="exts">
+      <UniqueIdentifier>{0c688f67-12af-4d3e-826b-440c598d889d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbghlpr.def">
+      <Filter>interface</Filter>
+    </None>
+  </ItemGroup>
+</Project>
