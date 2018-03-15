@@ -19,9 +19,9 @@ HRESULT WindbgEngine::Initialize()
 	ExtensionApis.nSize = sizeof(ExtensionApis);
 	debug_control->GetWindbgExtensionApis64(&ExtensionApis);
 
-	dprintf("***************************************************\n");
-	dprintf("*       WCA:: WINDBG code analyzer kit.1.0.       *\n");
-	dprintf("***************************************************\n");
+	dprintf("****************************************************\n");
+	dprintf("*                 dbghlpr ver.1.0.                 *\n");
+	dprintf("****************************************************\n");
 
 	return S_OK;
 }
