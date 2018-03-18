@@ -16,6 +16,12 @@
 #include <engine_linker.h>
 #include <helper.h>
 
+#ifdef _WIN64
+#pragma comment(lib, "helper_x64.lib")
+#else
+#pragma comment(lib, "helper.lib")
+#endif
+
 //
 // pattern
 //
@@ -56,7 +62,7 @@ void print_pattern_memory(unsigned long long base_virtual_address, unsigned char
 
 EXT_CLASS_COMMAND(WindbgEngine, pattern, "", "{b;ed,o;p;;}" "{l;ed,o;l;;}" "{pattern;x,o;pattern;;}") // bc = break code
 {
-#if 0
+#if 1
 	if (!g_Ext->HasArg("b"))
 		return;
 	if (!g_Ext->HasArg("l"))
@@ -119,7 +125,7 @@ EXT_CLASS_COMMAND(WindbgEngine, pattern, "", "{b;ed,o;p;;}" "{l;ed,o;l;;}" "{pat
 			memset(buffer, 0, (size_t)mbi.RegionSize);
 
 #ifdef _WIN64
-			unsigned long read = linker.read_virtual_memory(mbi.BaseAddress, buffer, mbi.RegionSize);
+			unsigned long read = linker.read_virtual_memory(mbi.BaseAddress, buffer, (unsigned long)mbi.RegionSize);
 #else
 			unsigned long read = linker.read_virtual_memory(mbi.BaseAddress, buffer, (size_t)mbi.RegionSize);
 #endif
@@ -128,7 +134,7 @@ EXT_CLASS_COMMAND(WindbgEngine, pattern, "", "{b;ed,o;p;;}" "{l;ed,o;l;;}" "{pat
 			unsigned long long o = 0;
 			do
 			{
-				f = helper::find(&buffer[o], read - o, pattern, j);
+				f = find(&buffer[o], read - o, pattern, j);
 				if (f)
 				{
 					unsigned long long offset = f - buffer;

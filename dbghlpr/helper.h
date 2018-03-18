@@ -43,6 +43,8 @@ bool __stdcall install(wchar_t *module_name, unsigned long pid, module_load_info
 bool __stdcall process_name_to_pid(wchar_t *process_name, unsigned long *pid);
 unsigned long wait(wchar_t *process_name);
 
+unsigned char * __stdcall find(void *base, unsigned long long base_size, unsigned char *code, unsigned long long code_size);
+
 namespace helper
 {
 	bool __stdcall suspend(unsigned long pid);
@@ -52,7 +54,7 @@ namespace helper
 	unsigned long check_thread(unsigned long pid, unsigned long long ip);
 	int restore(void *process_handle, unsigned long tid, unsigned long long ip);
 
-	unsigned char * __stdcall find(void *base, unsigned long long base_size, unsigned char *code, unsigned long long code_size);
+	//unsigned char * __stdcall find(void *base, unsigned long long base_size, unsigned char *code, unsigned long long code_size);
 	bool is_ascii(unsigned char *data, size_t max_len);
 	bool is_unicode(unsigned char *data, size_t max_len);
 }
