@@ -14,6 +14,7 @@ analyzer exts commands
 memory checker exts commands
 -------
 * [chkmem](https://github.com/0a777h/dbghlpr/blob/master/doc/chkmem.md)
+* [pattern](https://github.com/0a777h/dbghlpr/blob/master/doc/pattern.md)
 
 live debugging helper exts commands
 -------
