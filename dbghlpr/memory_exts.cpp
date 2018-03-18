@@ -232,7 +232,7 @@ EXT_CLASS_COMMAND(WindbgEngine, chkmem, "", "{exe;b,o;exe;;}") // pea = pe analy
 
 							g_Ext->Dml("<b><col fg=\"changed\"> [ unk img ]	</col></b>");
 							dprintf("%08x - %08x	", (unsigned long)base, (unsigned long)end);
-							g_Ext->Dml("<b><col fg=\"changed\">[ DANGER ]\n</col></b>");
+							//g_Ext->Dml("<b><col fg=\"changed\">[ DANGER ]\n</col></b>");
 						}
 					}
 				}
