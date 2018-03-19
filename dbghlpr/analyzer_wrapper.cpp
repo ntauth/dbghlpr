@@ -298,3 +298,61 @@ bool analyzer_wrapper::find_reference_value(unsigned long long base, unsigned lo
 
 	return true;
 }
+
+//
+// segment
+//
+std::map<unsigned long long, segment_descriptor *> _segment_descriptor_table;
+bool analyzer_wrapper::trace_callback(std::shared_ptr<engine::linker> engine, analyzer *current_analyzer_ptr, unsigned char *memory_dump, unsigned long long entry_point, void *context)
+{
+	std::set<unsigned long long> visited;
+	analyzer::block *b = new analyzer::block;
+	memset(b->tag, 0, sizeof(b->tag));
+
+	current_analyzer_ptr->trace(engine, entry_point, memory_dump, visited, *b);
+	segment_descriptor_ptr segment_descriptor = (segment_descriptor_ptr)context;
+	segment_descriptor->block_map[entry_point] = b;
+
+	return true;
+}
+
+unsigned long __stdcall analyzer_wrapper::create_segment_descriptor(void *args)
+{
+	unsigned long long ptr = *(unsigned long long *)args;
+	std::shared_ptr<engine::linker> engine;
+	if (!engine::create<engine_linker>(engine))
+	{
+		return 0;
+	}
+
+	unsigned long long base = 0;
+	unsigned long long end = 0;
+	analyzer_wrapper::calc_exe_segment(ptr, &base, &end);
+
+	segment_descriptor *sd = new segment_descriptor;
+	analyzer an(base, end - base, analyzer_wrapper::trace_callback, sd);
+	unsigned char *memory_dump = an.alloc(engine);
+	if (!memory_dump)
+	{
+		return 0;
+	}
+
+	std::shared_ptr<void> memory_dump_closer(memory_dump, free);
+	std::set<unsigned long long> entry_point_set;
+	std::set<unsigned long long> visited;
+
+	sd->base_address = an.get_base_address();
+	sd->end_address = an.get_end_address();
+
+	an.analyze(engine, memory_dump, entry_point_set);
+	_segment_descriptor_table[sd->base_address] = sd;
+
+	MessageBox(nullptr, L"done", L"dbghlpr", MB_OK);
+
+	return 1;
+}
+
+std::map<unsigned long long, segment_descriptor *> analyzer_wrapper::get_segment_descriptor_table()
+{
+	return _segment_descriptor_table;
+}

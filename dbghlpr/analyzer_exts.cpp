@@ -31,6 +31,10 @@ EXT_CLASS_COMMAND(WindbgEngine, fe, "", "{p;ed,o;p;;}") // find entry
 	unsigned long long base = 0;
 	unsigned long long end = 0;
 	analyzer_wrapper::calc_exe_segment(ptr, &base, &end);
+	if (analyzer_wrapper::check(base, end, ptr - 0x1000))
+	{
+		base = ptr - 0x1000;
+	}
 
 	dprintf(" [+] %I64x\n", ptr);
 
@@ -53,6 +57,8 @@ EXT_CLASS_COMMAND(WindbgEngine, fae, "", "{p;ed,o;p;;}") // find all entry
 	unsigned long long base = 0;
 	unsigned long long end = 0;
 	analyzer_wrapper::calc_exe_segment(ptr, &base, &end);
+
+	dprintf(" [-] %I64x-%I64x\n", base, end);
 
 	std::set<unsigned long long> entry_point_set;
 	if (analyzer_wrapper::find_all_entry(base, end - base, entry_point_set))
@@ -78,12 +84,22 @@ EXT_CLASS_COMMAND(WindbgEngine, fae, "", "{p;ed,o;p;;}") // find all entry
 EXT_CLASS_COMMAND(WindbgEngine, caller, "", "{p;ed,o;p;;}") // find caller
 {
 	unsigned long long ptr = GetArgU64("p", FALSE);
+	unsigned long long entry_base = 0;
 	unsigned long long base = 0;
 	unsigned long long end = 0;
 	std::list<unsigned long long> l;
 
 	analyzer_wrapper::calc_exe_segment(ptr, &base, &end);
-	ptr = analyzer_wrapper::find_entry(ptr, base, end - base);
+	if (analyzer_wrapper::check(base, end, ptr - 0x1000))
+	{
+		entry_base = ptr - 0x1000;
+	}
+	else
+	{
+		entry_base = base;
+	}
+
+	ptr = analyzer_wrapper::find_entry(ptr, entry_base, end - entry_base);
 	analyzer_wrapper::find_caller(ptr, base, end - base, l);
 
 	dprintf(" [-] %I64x-%I64x\n", base, end);
@@ -168,7 +184,7 @@ EXT_CLASS_COMMAND(WindbgEngine, refstr, "", "{p;ed,o;p;;}" "{a;b,o;a;;}") // ref
 			char comment_str[1024];
 			StringCbCopyA(comment_str, strlen(str), str);
 
-			dprintf("	[-] %s	; \"", comment_str), print_ascii(str_dump, l), dprintf("\"\n");
+			dprintf("%s	; \"", comment_str), print_ascii(str_dump, l), dprintf("\"\n");
 		}
 
 		if (helper::is_unicode(str_dump, 512))
@@ -182,7 +198,7 @@ EXT_CLASS_COMMAND(WindbgEngine, refstr, "", "{p;ed,o;p;;}" "{a;b,o;a;;}") // ref
 			char comment_str[1024];
 			StringCbCopyA(comment_str, strlen(str), str);
 
-			dprintf("	[-] %s	; \"", comment_str), print_unicode(str_dump, l), dprintf("\"\n");
+			dprintf("%s	; \"", comment_str), print_unicode(str_dump, l), dprintf("\"\n");
 		}
 	}
 }
@@ -207,7 +223,7 @@ EXT_CLASS_COMMAND(WindbgEngine, refexe, "", "{p;ed,o;p;;}" "{a;b,o;a;;}") // ref
 	for (ref_map_it; ref_map_it != ref_map.end(); ++ref_map_it)
 	{
 		MEMORY_BASIC_INFORMATION64 mbi = { 0, };
-		if (!engine->virtual_query(ref_map_it->first, &mbi))
+		if (!engine->query_virtual(ref_map_it->first, &mbi))
 		{
 			continue;
 		}
@@ -240,4 +256,28 @@ EXT_CLASS_COMMAND(WindbgEngine, refexe, "", "{p;ed,o;p;;}" "{a;b,o;a;;}") // ref
 			}
 		}
 	}
+}
+
+//
+// segment
+//
+EXT_CLASS_COMMAND(WindbgEngine, create, "", "{p;ed,o;p;;}")
+{
+	unsigned long long ptr = GetArgU64("p", FALSE);
+	unsigned long long base = 0;
+	unsigned long long end = 0;
+	analyzer_wrapper::calc_exe_segment(ptr, &base, &end);
+
+	std::map<unsigned long long, segment_descriptor *> segment_descriptor_table = analyzer_wrapper::get_segment_descriptor_table();
+	std::map<unsigned long long, segment_descriptor *>::iterator segment_descriptor_table_it;
+	segment_descriptor_table_it = segment_descriptor_table.find(base);
+
+	if (segment_descriptor_table_it != segment_descriptor_table.end())
+	{
+		dprintf("	[-] found segment descriptor\n\n");
+		return;
+	}
+
+	HANDLE thread_handle = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)analyzer_wrapper::create_segment_descriptor, &ptr, 0, nullptr);
+	WaitForSingleObject(thread_handle, 1000);
 }

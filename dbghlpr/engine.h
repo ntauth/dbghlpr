@@ -10,20 +10,14 @@ public:
 	//
 	// analyzer
 	//
-	void add();
-	void segments();
-	void select_segment();
-	void database();
-	void ftrace();
-	void xref();
-	void iat();
+	void fe();
+	void fae();
+	void caller();
+	void refstr();
+	void refexe();
+	void calc();
 
-	void merge();
-	void divide();
-	void tag();
-	void comment();
-
-	void danger();
+	void create();
 
 	//
 	// debugging
@@ -49,25 +43,6 @@ public:
 	void query();
 	void trace();
 	void context();
-
-	//
-	// segments
-	//
-	void create();
-	void head();
-	void entrys();
-	void uf();
-	void ref();
-
-	//
-	// simple analyzer
-	//
-	void fe();
-	void fae();
-	void caller();
-	void refstr();
-	void refexe();
-	void calc();
 };
 
 #endif
