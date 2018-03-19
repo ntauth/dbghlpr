@@ -61,6 +61,7 @@ namespace engine
 		virtual bool __stdcall open(char *path) = 0;
 		virtual unsigned long long __stdcall get_next_virtual_address(unsigned long long) = 0;
 		virtual bool __stdcall virtual_query(unsigned long long virtual_address, void *out_memory_info) = 0;
+		virtual bool __stdcall query_virtual(unsigned long long virtual_address, void *out_memory_info) = 0;
 		virtual unsigned long __stdcall read_virtual_memory(unsigned long long virtual_address, unsigned char *out_memory, unsigned long read_size) = 0;
 		virtual bool __stdcall get_thread_context(cpu_context_type *context) = 0;
 

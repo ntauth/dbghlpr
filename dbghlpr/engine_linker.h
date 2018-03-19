@@ -18,6 +18,8 @@ private:
 public:
 	bool __stdcall open(char *path);
 	bool __stdcall virtual_query(unsigned long long virtual_address, void *out_memory_info);
+	bool __stdcall query_virtual(unsigned long long virtual_address, void *out_memory_info);
+
 	unsigned long long __stdcall get_next_virtual_address(unsigned long long);
 	unsigned long __stdcall read_virtual_memory(unsigned long long virtual_address, unsigned char *out_memory, unsigned long read_size);
 	bool __stdcall get_thread_context(cpu_context_type *context);

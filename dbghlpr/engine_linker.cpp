@@ -148,6 +148,31 @@ bool __stdcall engine_linker::virtual_query(unsigned long long virtual_address, 
 	return false;
 }
 
+bool __stdcall engine_linker::query_virtual(unsigned long long virtual_address, void *out_memory_info)
+{
+	MEMORY_BASIC_INFORMATION64 *out_mbi = (MEMORY_BASIC_INFORMATION64 *)out_memory_info;
+
+	if (!debug_data_space_2_)
+	{
+		return false;
+	}
+
+	if (((IDebugDataSpaces2 *)debug_data_space_2_)->QueryVirtual(virtual_address, out_mbi) != S_OK)
+	{
+		return false;
+	}
+
+	unsigned long long base = out_mbi->BaseAddress;
+	unsigned long long end = base + out_mbi->RegionSize;
+
+	if (base <= virtual_address && end >= virtual_address)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 unsigned long long __stdcall engine_linker::get_next_virtual_address(unsigned long long virtual_address)
 {
 	MEMORY_BASIC_INFORMATION64 mbi;
